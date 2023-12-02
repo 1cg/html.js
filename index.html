@@ -603,6 +603,53 @@
     </p>
 </section>
 
+<section>
+    <h2 id="io"><a href="#io">I/O</a></h2>
+    <p>
+        It's a little late in the game, since we've been using <code>&lt;output></code> a bunch already, but HTML, The Programming Language,
+        supports simple I/O operations.  Of course, HTML, The Programming Language, can interact with the DOM in order to
+        do I/O as well, but simple I/O can be accomplished directly in the language itself.
+    </p>
+
+    <h3 id="output"><a href="#output">Outputting Values</a></h3>
+    <p>
+        You can output the top of the stack by using the <code>&lt;output></code> tag.  This will <em>not</em> consume
+        the value.
+    </p>
+    <p>
+        By default the value will be printed to standard out (<code>console.log</code>).  You may change this by
+        setting the <code>html.meta.out</code> configuration variable to another value.
+    </p>
+    <pre>
+&lt;!-- this will print "Hello World!" to standard out -->
+&lt;s>Hello World!&lt;/s>
+&lt;output>&lt;/output>
+    </pre>
+
+    <h3 id="input"><a href="#input">Getting User Input</a></h3>
+    <p>
+        Of course you can use the DOM to get user input if you would like.  But you can also use the <code>&lt;input></code>
+        tag to get user input.
+    </p>
+    <p>
+        This tag will prompt the user for input using the <code>prompt()</code> method in JavaScript.  The message
+        shown to the user will be taken from the <code>placeholder</code> attribute.  If you wish to ask for a number,
+        rather than a string, from the user, you can set the <code>type</code> attribute to <code>number</code>.
+    </p>
+    <p>
+        The result of the prompt will be pushed onto the top of the value stack.
+    </p>
+    <pre>
+&lt;!-- this will ask the user for their name, then say hello in the console -->
+&lt;input placeholder="What is your name?"/>
+&lt;var title="name">&lt;/var>
+&lt;s>Nice to meet you,&lt;/s>
+&lt;cite>name&lt;/cite>
+&lt;dd>&lt;/dd>
+&lt;output>&lt;/output>
+    </pre>
+</section>
+
 
 
 <section>
@@ -639,6 +686,14 @@
             </i>
             <p>
                 <a href="#turning-complete">Yes.</a>
+            </p>
+        </li>
+        <li>
+            <i>
+                Is there a shirt?
+            </i>
+            <p>
+                <a href="https://htmx-shop.fourthwall.com/products/html-pl-btw-shirt">Yes,</a>
             </p>
         </li>
         <li>
