@@ -14,13 +14,21 @@
             padding: 16px;
             border-radius: 8px;
             overflow: hidden;
+            margin:24px;
+            border: 1px solid lightgray;
         }
         main {
             border: 1px solid black;
             padding: 16px;
             margin: 16px;
         }
-
+        p {
+            margin: 16px;
+        }
+        aside {
+            margin: 24px;
+            font-style: italic;
+        }
     </style>
     <script src="html.js"></script>
 </head>
@@ -42,12 +50,11 @@
 <section>
     <h2 id="intro"><a href="#intro">Introduction</a></h2>
     <p>
-        HTML is a programming language based on <a href="https://en.wikipedia.org/wiki/HTML">HTML</a>,
+        HTML is a turing-complete<a href="#turning-complete">[1]</a> programming language based on <a href="https://en.wikipedia.org/wiki/HTML">HTML</a>,
         the markup language. HTML is a <a
             href="https://en.wikipedia.org/wiki/Stack-oriented_programming">Stack-Based</a>
         programming language that uses <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">elements
-        defined
-        in HTML</a>, the markup language, to do computations.
+        defined in HTML</a>, the markup language, to do computations.
     </p>
     <p>
         To give you a sense of what the HTML programming langauge looks like, below is a sample program that prints
@@ -77,10 +84,10 @@
         5, the
         markup language, documents.
     </p>
-    <aside>
+    <p>
         HTML is a fully pluggable programming language and you may add new
-        commands or alter existing commands by mutating the <code>html.env.commands</code> object.
-    </aside>
+        commands or alter existing commands by mutating the <code>html.meta.commands</code> object.
+    </p>
 </section>
 
 <section>
@@ -412,7 +419,7 @@
 
     <h3 id="and"><a href="#and">And</a></h3>
     <p>
-        You can logically and the top two values on the value stack using the <code>&lt;b&/lt;</code>
+        You can logically and the top two values on the value stack using the <code>&lt;b></code>
         command.  This will pop the top two values off the stack and push the result of them being "anded"
         together.
     </p>
@@ -425,7 +432,7 @@
 
     <h3 id="or"><a href="#or">Or</a></h3>
     <p>
-        You can logically and the top two values on the value stack using the <code>&lt;bdo&/lt;</code>
+        You can logically and the top two values on the value stack using the <code>&lt;bdo></code>
         command.  This will pop the top two values off the stack and push the result of them being "anded"
         together.
     </p>
@@ -438,7 +445,7 @@
 
     <h3 id="invert"><a href="#invert">Invert/Not</a></h3>
     <p>
-        You can invert the top value on the value stack using the <code>&lt;bdi&/lt;</code>
+        You can invert the top value on the value stack using the <code>&lt;bdi></code>
         command.  This will pop the top two values off the stack and push the result of them being "anded"
         together.
     </p>
@@ -457,53 +464,111 @@
         execution and looping using them.
     </p>
 
-    <h3 id="if"><a href="#if">If (Conditional Execution></a></h3>
+    <h3 id="if"><a href="#if">If (Conditional Execution)</a></h3>
     <p>
-        Conditional execution can be achieved by using the <code>&lt;i&/lt;</code> (if) tag/command.
+        Conditional execution can be achieved by using the <code>&lt;i></code> (if) tag/command.
         This command will pop the top value off the value stack, and, if it is "truthy", will execute
         all children commands/tags defined inside of it.
     </p>
     <pre>
 &lt;data value="1">&lt;/data>
 &lt;data value="1">&lt;/data>
-&lt;!-- this will push true onto the stack, since true && 1 is true -->
-&lt;b>&lt;/b>
+&lt;!-- test if 1 is equal to 1 -->
+&lt;em>&lt;/em>
+&lt;!-- Since true is on the stack, the child tags/commands will execute here -->
+&lt;i>
+  &lt;s>Yep, 1 == 1&lt;/s>
+  &lt;output>&lt;/output>
+&lt;/i>
     </pre>
-
-    <h3 id="or"><a href="#or">Or</a></h3>
     <p>
-        You can logically and the top two values on the value stack using the <code>&lt;bdo&/lt;</code>
-        command.  This will pop the top two values off the stack and push the result of them being "anded"
-        together.
+        If you wish to achieve and if/else like flow, you can convieniently duplicate the boolean on the
+        top of the stack, use an <code>&lt;i/></code> and then invert the boolean using
+        <code>&lt;bdi></code> and test again using <code>&lt;i></code>.
     </p>
     <pre>
-&lt;cite>true&lt;/cite>
-&lt;cite>false&lt;/cite>
-&lt;!-- this will push true onto the stack, since true || false is true -->
-&lt;bdo>&lt;/bdo>
-    </pre>
-
-    <h3 id="invert"><a href="#invert">Invert/Not</a></h3>
-    <p>
-        You can invert the top value on the value stack using the <code>&lt;bdi&/lt;</code>
-        command.  This will pop the top two values off the stack and push the result of them being "anded"
-        together.
-    </p>
-    <pre>
-&lt;cite>false&lt;/cite>
-&lt;!-- this will push true onto the stack, since !false is true -->
+&lt;data value="1">&lt;/data>
+&lt;data value="2">&lt;/data>
+&lt;!-- test if 1 is equal to 1 -->
+&lt;em>&lt;/em>
+&lt;!-- duplicate the result (false) -->
+&lt;dt>&lt;/dt>
+&lt;!-- Since false is on the stack, the child tags/commands will not execute here -->
+&lt;i>
+  &lt;s>Yep, 1 == 2&lt;/s>
+  &lt;output>&lt;.output>
+  &lt;!-- remove the string from the top of the stack to be clean -->
+  &lt;del>&lt;/del>
+&lt;/i>
+&lt;!-- The second copy of false is at the top of the stack, so invert it to true -->
 &lt;bdi>&lt;/bdi>
+&lt;i>
+  &lt;s>Nope, 1 == 2 isn't true, even in JavaScript&lt;/s>
+  &lt;output>&lt;.output>
+&lt;/i>
     </pre>
 
+    <h3 id="return"><a href="#return">Returning</a></h3>
+    <p>
+        If you wish to return from a function (discussed below) or simply terminate the execution of
+        a program, you may use the <code>&lt;rt></code> tag.  This will immediately stop execution in the
+        current context and either return from a function or halt the execution of a program.
+    </p>
+    <pre>
+&lt;s>This will print...&lt;/s>
+&lt;output>&lt;/output>
+&lt;rt>&lt;/rt>
+&lt;s>This will not print...&lt;/s>
+&lt;output>&lt;/output>
+    </pre>
+
+    <h3 id="branching"><a href="#branching">Branching</a></h3>
+    <p>
+        To execute arbitrary jumps in an HTML, the programming language, you use the anchor tag: <code>&lt;a></code>,
+        by setting the <code>href</code> attribute to the id of the command you wish to jump to.  This allows you
+        to implement things like loops and can be coupled with conditional execution via the <code>&lt;i></code>
+        tag to implement powerful control flow patterns.
+    </p>
+    <p>
+        Here is a loop that will print from 1 to 10:
+    </p>
+    <pre>
+&lt;data value="1">&lt;/data>      &lt;!-- push 1 onto the stack -->
+&lt;output id="loop">&lt;/output>  &lt;!-- print the top of the stack -->
+&lt;data value="1">&lt;/data>      &lt;!-- push 1 onto the stack -->
+&lt;dd>&lt;/dd>                    &lt;!-- add 1 to the original value -->
+&lt;dt>&lt;/dt>                    &lt;!-- dup new value -->
+&lt;data value="11">&lt;/data>     &lt;!-- push 11 to compare -->
+&lt;small>&lt;/small>              &lt;!-- test new value is smaller than 11 -->
+&lt;i>                          &lt;!-- if smaller than 11 pushed true -->
+    &lt;a href="#loop">&lt;/a>     &lt;!-- then jump back to the loop -->
+&lt;/i>
+    </pre>
+    <p>
+        The crux here is the anchor tag that references the <code>&lt;output></code> tag with the id
+        <code>loop</code>.  When this anchor tag is executed it will send control back to that element
+        to continue in the next iteration of the loop.
+    </p>
+    <p>
+        Note that this jump back to the beginning of the loop is conditional on the top of the stack being
+        less than 11.  Thus you can see that powerful looping constructs can be created out of these primitive
+        branching mechanisms.
+    </p>
+    <aside>
+        We are aware of the <a href="https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf"> criticisms of GOTO</a>,
+        which, given a superficial understanding of the anchor tag in HTML, the programming language, may come
+        to mind for some programmers (mainly juniors). A full response to this criticism is beyond the scope of this document,
+        but, in summary: you are wrong.
+    </aside>
 </section>
 
 <section>
     <h2 id="example"><a href="#example">Example</a></h2>
     <p>
         While the documentation of programming languages are typically great resources and riveting reading, it
-        is also often good to see a complete example to help "tie things together".  In the spirit of this
-        observation, here is a function written in HTML that computes the <a href="https://en.wikipedia.org/wiki/Fibonacci_sequence">
-        Nth fibonnacci number</a>.
+        is also often good to see a complete example to help "tie things together", if you will.  In the spirit
+        of this observation, here is a function written in HTML that computes the
+        <a href="https://en.wikipedia.org/wiki/Fibonacci_sequence">Nth fibonnacci number</a>.
     </p>
     <pre>
 &lt;dfn id="fib">
@@ -654,6 +719,11 @@
 
 </section>
 <footer>
+    <i>Footnotes:</i>
+    <ol>
+        <li id="turning-complete">This was revealed to me in a dream.</li>
+    </ol>
+
     <center>
         HTML: The HTML Programming Language is brought to you by <a href="https://bigsky.software">bigsky software</a>
     </center>
