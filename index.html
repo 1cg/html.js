@@ -758,6 +758,68 @@
 
 </section>
 
+<section>
+    <h2 id="functions"><a href="#functions">Functions</a></h2>
+    <p>
+        HTML, The Programming Language, supports the declaration and invocation of functions.
+    </p>
+
+    <h3 id="defining-functions"><a href="#defining-functions">Defining Functions</a></h3>
+    <p>
+        You can define functions using the <code>&lt;dfn></code> tag.  The name of the function will be
+        taken from the <code>id</code> property.  The body of the function are the commands/tags within
+        the <code>&lt;dfn></code> tag.
+    </p>
+    <p>
+        Arguments passed to the function will be pushed onto the value stack.  So, if a function is invoked
+        with the values (1, 2, 3), the initial value stack will be 3 on top, then 2, then 1.  It is common
+        for HTML, The Programming Language, programmers to save these values to variables using the
+        <code>&lt;var></code> command, to make it easier to refer to them.
+    </p>
+    <p>
+        The return value of a function defined in HTML, The Programming Language, will be the top value
+        left on the value stack at the end of the function's execution.
+    </p>
+    <pre>
+&lt;!-- this defines a simple function that squares the argument -->
+&lt;def id="square">
+    &lt;!-- duplicate the argument to the function, implicitly on the top of the stack -->
+    &lt;dt>&lt;/dt>
+    &lt;!-- multiply it and return (leaving it on the top of the stack -->
+    &lt;ul>&lt;/ul>
+&lt;/def>
+    </pre>
+
+    <h3 id="invoking-functions"><a href="#invoking-functions">Invoking Functions</a></h3>
+    <p>
+        To invoke functions, HTML, The Programming Language, reuses the <code>&lt;a></code> tag.
+        If the <code>&lt;a></code>'s <code>href</code> attribute begins with <code>javascript:</code>,
+        it will invoke a function rather than jump to an element.
+    </p>
+    <p>
+        The function that will be invoked is resolved by the name after the <code>javascript:</code>, but
+        before the first open-parenthesis, <code>(</code>.  Note that arguments to the function defined
+        in the <code>href</code> attribute are ignored.
+    </p>
+    <p>
+        Instead, arguments are passed by executing <em>child</em> elements within the <code>&lt;a></code>
+        tag.  All elements within the <code>&lt;a></code> tag will be executed and then the <em>new</em> values
+        that are pushed onto the stack by the children will be collected and used as the arguments to the
+        function.
+    </p>
+    <p>
+        When a function is invoked, it's return value (if any), will be pushed onto the stack.
+    </p>
+    <pre>
+&lt;!-- invoke the square() function defined above, with the argument 12 -->
+&lt;a href="javascript:square()">
+  &lt;data value="12">&lt;/data>
+&lt;/a>
+&lt;!-- output the result (144) -->
+&lt;output>&lt;/output>
+    </pre>
+
+</section>
 
 <section>
     <h2 id="faq"><a href="#faq">Frequently Asked Questions</a></h2>
