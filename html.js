@@ -263,7 +263,7 @@ let html = (() => {
     function makeEnv(vars) {
         return {
             stack: [],
-            vars: {
+            vars: { // start with standard variables for common values
                 true:true,
                 false:false,
                 null:null
