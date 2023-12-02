@@ -43,6 +43,7 @@
             <a href=".">Documentation</a> &Or;
             <a href="./test.html">Tests</a> &Or;
             <a href="./html.js">html.js</a> &Or;
+            <a href="https://htmx-shop.fourthwall.com/products/html-pl-btw-shirt">t-shirt</a> &Or;
             <a href="./LICENSE.txt">LICENSE</a>
         </center>
     </nav>
@@ -675,6 +676,9 @@
         tag.  The name of the property to set will be the inner text of the tag.  The value to set into the property
         must be on the top of the stack, and the object to set the property of must be second from the top of the stack.
     </p>
+    <p>
+        Both the value being set into the object and the object will be consumed from the value stack.
+    </p>
     <pre>
 &lt;!-- load the document onto the stack -->
 &lt;cite>document&lt;/cite>
@@ -684,6 +688,72 @@
 &lt;s>Hello World!&lt;/s>
 &lt;!-- set the innerHTML property of the body to "Hello World!" -->
 &lt;samp>innerHTML&lt;/samp>
+    </pre>
+
+</section>
+
+<section>
+    <h2 id="arrays"><a href="#arrays">Working With Arrays</a></h2>
+    <p>
+        You can both read and write to slots in arrays in HTML, The Programming Language.
+    </p>
+
+    <h3 id="reading-arrays"><a href="#reading-arrays">Reading An Array Value</a></h3>
+    <p>
+        You can read the value at an index in an array <code>&lt;address></code>tag.  This command will
+        consume the top value of the value stack as the index to read from, and the second value from the
+        top of the stack as the array to read the index from.
+    </p>
+    <p>
+        Note that this tag can also be used to reflectively access properties, by putting a string on the
+        top of the stack rather than an integer.
+    </p>
+    <pre>
+&lt;!-- this pushes the array [42, 33] onto the stack -->
+&lt;ol>
+    &lt;li>
+        &lt;data value="42">&lt;/data>
+    &lt;/li>
+    &lt;li>
+        &lt;data value="33">&lt;/data>
+    &lt;/li>
+&lt;/ol>
+&lt;!-- push the value 0 onto the stack -->
+&lt;data value="0">&lt;/data>
+&lt;!-- consumes the 0 and the array, indexes into the array at position 0,
+        leaving the value 42 on the top of the value stack-->
+&lt;address>&lt;/address>
+
+    </pre>
+
+    <h3 id="writing-arrays"><a href="#writing-arrays">Writing An Array Value</a></h3>
+    <p>
+        You can write the value at an index in an array <code>&lt;ins></code>tag.  This command will
+        consume the top value of the value stack as the value to insert, the second value from the
+        top of the stack as index to write the value into and the third value from the top of the
+        stack as the array to set the value into.
+    </p>
+    <p>
+        Note that this tag can also be used to reflectively set properties, by putting a string on the
+        top of the stack rather than an integer.
+    </p>
+    <pre>
+&lt;!-- this pushes the array [42, 33] onto the stack -->
+&lt;ol>
+    &lt;li>
+        &lt;data value="42">&lt;/data>
+    &lt;/li>
+    &lt;li>
+        &lt;data value="33">&lt;/data>
+    &lt;/li>
+&lt;/ol>
+&lt;!-- push the value 0 onto the stack -->
+&lt;data value="0">&lt;/data>
+&lt;!-- push the value 22 onto the stack -->
+&lt;data value="22">&lt;/data>
+&lt;!-- consumes the 22, 0 and the array, indexes into the array at position 0,
+        and sets it to the value 22-->
+&lt;address>&lt;/address>
     </pre>
 
 </section>
@@ -730,7 +800,7 @@
                 Is there a shirt?
             </i>
             <p>
-                <a href="https://htmx-shop.fourthwall.com/products/html-pl-btw-shirt">Yes,</a>
+                <a href="https://htmx-shop.fourthwall.com/products/html-pl-btw-shirt">Yes.</a>
             </p>
         </li>
         <li>
