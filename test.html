@@ -1,0 +1,649 @@
+<html lang="en">
+<head>
+    <title>HTML: The HTML Programming Language, the test suite</title>
+    <script src="html.js"></script>
+</head>
+<style>
+    body {
+        max-width: 768px;
+        margin: auto;
+        padding: 16px
+    }
+    main {
+        border: 1px solid black;
+        padding: 16px;
+        margin: 16px;
+    }
+</style>
+<body>
+
+<header>
+    <h1>The HTML Programming Language Test Suite</h1>
+    <p>This is a suite of tests that establish that the HTML programming langauge works correctly.</p>
+    <nav>
+        <a href=".">Documentation</a>
+        <a href="./test.html">Tests</a>
+        <a href="./html.js">html.js</a>
+        <a href="./LICENSE.txt">LICENSE</a>
+    </nav>
+</header>
+
+<section>
+    <h2>Bootstrap Tests</h2>
+
+    <span>A Countdown Test</span>
+    <main data-expected="2019181716151413121110987654321">
+        <data value="20"></data>     <!-- push 20 onto the stack -->
+        <output id="loop"></output>  <!-- print the top of the stack -->
+        <data value="1"></data>      <!-- push 1 onto the stack -->
+        <sub></sub>                  <!-- sub 1 from the value -->
+        <dt></dt>                    <!-- dup the value -->
+        <data value="0"></data>      <!-- push zero to compare -->
+        <big></big>                  <!-- test if bigger than 0 -->
+        <i>                          <!-- if bigger than zero -->
+            <a href="#loop"></a>     <!-- jump back to the loop -->
+        </i>
+    </main>
+
+    <span>Hello World Test</span>
+    <main data-expected="Hello World!">
+        <s>Hello World!</s> <!-- push string onto the stack -->
+        <output></output>   <!-- print it -->
+    </main>
+
+    <span>A Function Invocation Test</span>
+    <main data-expected="Functions Rock">
+        <a href="javascript:foo()">  <!-- invoke the global function foo -->
+            <s>Functions Rock</s>    <!-- With the string "Functions Rock" -->
+        </a>
+        <dfn id="foo">               <!-- Define a function named foo -->
+            <output></output>        <!-- That prints out the top of stack/last argument passed to it (same thing) -->
+        </dfn>
+    </main>
+
+    <span>invoking method and getting props on objects</span>
+    <main data-expected="Some Content">
+        <cite>document</cite>                  <!-- load the document onto the stack -->
+        <a href="javascript:getElementById()"
+           target="_top">                      <!-- invoke getElementById() on it -->
+            <s>div1</s>                        <!-- with the argument "div1" -->
+        </a>
+        <rp>innerHTML</rp>                       <!-- get the innerHTML property of the result -->
+        <output></output>                      <!-- output the result -->
+    </main>
+    <div id="div1">Some Content</div>
+
+    <span>functions can return values</span>
+    <main data-expected="Some Content">
+        <cite>document</cite>                  <!-- load the document onto the stack -->
+        <a href="javascript:getElementById()"
+           target="_top">                      <!-- invoke getElementById() on it -->
+            <s>div1</s>                        <!-- with the argument "div1" -->
+        </a>
+        <rp>innerHTML</rp>                       <!-- get the innerHTML property of the result -->
+        <output></output>                      <!-- output the result -->
+    </main>
+    <div id="div1">Some Content</div>
+
+    <span>Setting a property works</span>
+    <main data-expected="Hello Props">
+        <cite>document</cite>                  <!-- load the document onto the stack -->
+        <a href="javascript:getElementById()"
+           target="_top">                      <!-- invoke getElementById() on it -->
+            <s>div2</s>                        <!-- with the argument "div2" -->
+        </a>
+        <dt></dt>                              <!-- duplicate element so we can set and read the innerHTML prop-->
+        <s>Hello Props</s>                     <!-- load a string "Hello Props" -->
+        <samp>innerHTML</samp>                       <!-- set the innerHTML to the new string -->
+        <rp>innerHTML</rp>                     <!-- read the updated content -->
+        <output></output>                      <!-- output the result -->
+    </main>
+    <div id="div2">Some Content</div>
+
+    <span>Variables & Return & Recursive Function Calls work</span>
+    <main data-expected="55">
+        <a href="javascript:fib()">            <!-- invoke fib() -->
+            <data value="10"></data>           <!-- with the argument 10 -->
+        </a>
+        <output></output>
+
+        <dfn id="fib">
+            <var title="num"></var>            <!-- save the arg in a variable num -->
+
+            <cite>num</cite>                   <!-- load num -->
+            <data value="1"></data>            <!-- push 1 -->
+            <small></small>                    <!-- test if the arg is smaller -->
+            <i>                                <!-- if it is -->
+                <data value="0"></data>        <!-- push 0 -->
+                <rt></rt>                      <!-- return -->
+            </i>
+
+            <cite>num</cite>                   <!-- load num -->
+            <data value="1"></data>            <!-- push 1 -->
+            <em></em>                          <!-- test if equal -->
+            <i>                                <!-- if it is -->
+                <data value="1"></data>        <!-- push 1 -->
+                <rt></rt>                      <!-- return -->
+            </i>
+
+            <cite>num</cite>                   <!-- load num -->
+            <data value="2"></data>            <!-- push 2 -->
+            <em></em>                          <!-- test if equal -->
+            <i>                                <!-- if it is -->
+                <data value="1"></data>        <!-- push 1 -->
+                <rt></rt>                      <!-- return -->
+            </i>
+
+            <a href="javascript:fib()">            <!-- invoke fib() on arg - 1 -->
+                <cite>num</cite>
+                <data value="1"></data>
+                <sub></sub>
+            </a>
+
+            <a href="javascript:fib()">            <!-- invoke fib() on arg - 2 -->
+                <cite>num</cite>
+                <data value="2"></data>
+                <sub></sub>
+            </a>
+
+            <dd></dd>                         <!-- add the returned numbers and return -->
+        </dfn>
+    </main>
+</section>
+
+<section>
+    <h2>Literal Tests</h2>
+
+    <span>True Literal</span>
+    <main data-expected="true">
+        <cite>true</cite>
+        <output></output>
+    </main>
+
+    <span>False Literal</span>
+    <main data-expected="false">
+        <cite>false</cite>
+        <output></output>
+    </main>
+
+    <span>Null Literal</span>
+    <main data-expected="null">
+        <cite>null</cite>
+        <s></s>
+        <dd></dd>
+        <output></output>
+    </main>
+
+    <span>String Literal</span>
+    <main data-expected="foo">
+        <s>foo</s>
+        <output></output>
+    </main>
+
+    <span>Number Literal</span>
+    <main data-expected="3">
+        <data value="3"></data>
+        <output></output>
+    </main>
+
+    <span>List Literal</span>
+    <main data-expected="Foo,Bar">
+        <ol>
+            <li>
+                <s>Foo</s>
+            </li>
+            <li>
+                <s>Bar</s>
+            </li>
+        </ol>
+        <output></output>
+    </main>
+
+    <span>Object Literal</span>
+    <main data-expected="Foo3">
+        <table>
+            <thead>
+            <tr>
+                <th>Foo</th>
+                <th>Bar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <s>Foo</s>
+                </td>
+                <td>
+                    <data value="3"></data>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <dt></dt>
+        <rp>Foo</rp>
+        <output></output>
+        <del></del>
+        <rp>Bar</rp>
+        <output></output>
+    </main>
+
+
+</section>
+
+<section>
+    <h2>Math Tests</h2>
+
+    <span>Add Test</span>
+    <main data-expected="3">
+        <data value="1"></data>
+        <data value="2"></data>
+        <dd></dd>
+        <output></output>
+    </main>
+
+    <span>Subtract Test</span>
+    <main data-expected="1">
+        <data value="2"></data>
+        <data value="1"></data>
+        <sub></sub>
+        <output></output>
+    </main>
+
+    <span>Multiply Test</span>
+    <main data-expected="6">
+        <data value="2"></data>
+        <data value="3"></data>
+        <ul></ul>
+        <output></output>
+    </main>
+
+    <span>Divide Test</span>
+    <main data-expected="2">
+        <data value="6"></data>
+        <data value="3"></data>
+        <div></div>
+        <output></output>
+    </main>
+</section>
+
+<section>
+    <h2>Stack Manipulation Tests</h2>
+
+    <span>Duplicate Top</span>
+    <main data-expected="2">
+        <data value="1"></data>
+        <dt></dt>
+        <dd></dd>
+        <output></output>
+    </main>
+
+    <span>Delete Top</span>
+    <main data-expected="3">
+        <data value="1"></data>
+        <data value="2"></data>
+        <data value="3"></data>
+        <del></del>
+        <dd></dd>
+        <output></output>
+    </main>
+</section>
+
+<section>
+    <h2>Comparison Tests</h2>
+
+    <span>Smaller</span>
+    <main data-expected="truefalse">
+        <data value="1"></data>
+        <data value="2"></data>
+        <small></small>
+        <output></output>
+        <data value="2"></data>
+        <data value="1"></data>
+        <small></small>
+        <output></output>
+    </main>
+
+    <span>Bigger</span>
+    <main data-expected="falsetrue">
+        <data value="1"></data>
+        <data value="2"></data>
+        <big></big>
+        <output></output>
+        <data value="2"></data>
+        <data value="1"></data>
+        <big></big>
+        <output></output>
+    </main>
+
+    <span>Equal</span>
+    <main data-expected="falsefalsetrue">
+        <data value="1"></data>
+        <data value="2"></data>
+        <em></em>
+        <output></output>
+        <data value="2"></data>
+        <data value="1"></data>
+        <em></em>
+        <output></output>
+        <data value="1"></data>
+        <data value="1"></data>
+        <em></em>
+        <output></output>
+    </main>
+
+</section>
+
+<section>
+    <h2>Logical Tests</h2>
+
+    <span>Logical And</span>
+    <main data-expected="truefalse">
+        <cite>true</cite>
+        <cite>true</cite>
+        <b></b>
+        <output></output>
+        <cite>false</cite>
+        <cite>true</cite>
+        <b></b>
+        <output></output>
+    </main>
+
+    <span>Logical Not</span>
+    <main data-expected="falsetrue">
+        <cite>true</cite>
+        <bdi></bdi>
+        <output></output>
+        <cite>false</cite>
+        <bdi></bdi>
+        <output></output>
+    </main>
+
+    <span>Logical Or</span>
+    <main data-expected="truetruefalse">
+        <cite>true</cite>
+        <cite>true</cite>
+        <bdo></bdo>
+        <output></output>
+
+        <cite>false</cite>
+        <cite>true</cite>
+        <bdo></bdo>
+        <output></output>
+
+        <cite>false</cite>
+        <cite>false</cite>
+        <bdo></bdo>
+        <output></output>
+    </main>
+
+</section>
+
+<section>
+    <h2>Array Tests</h2>
+
+    <span>Indexing An Array</span>
+    <main data-expected="String 2">
+        <ol>
+            <li>
+                <s>String 1</s>
+            </li>
+            <li>
+                <s>String 2</s>
+            </li>
+            <li>
+                <s>String 3</s>
+            </li>
+        </ol>
+        <dt></dt>
+        <data value="1"></data>
+        <address></address>
+        <output></output>
+    </main>
+
+    <span>Indexing A Prop</span>
+    <main data-expected="String 2">
+        <table>
+            <tr><th>Foo</th><th>Bar</th></tr>
+            <tr><td><s>String 1</s></td><td><s>String 2</s></td></tr>
+        </table>
+        <dt></dt>
+        <s>Bar</s>
+        <address></address>
+        <output></output>
+    </main>
+
+    <span>Setting A Value In An Array</span>
+    <main data-expected="String 4">
+        <ol>
+            <li>
+                <s>String 1</s>
+            </li>
+            <li>
+                <s>String 2</s>
+            </li>
+            <li>
+                <s>String 3</s>
+            </li>
+        </ol>
+        <dt></dt>
+        <data value="1"></data>
+        <s>String 4</s>
+        <ins></ins>
+        <dt></dt>
+        <data value="1"></data>
+        <address></address>
+        <output></output>
+    </main>
+
+</section>
+
+<section>
+
+    <h2>Props Tests</h2>
+
+    <span>Indexing A Prop</span>
+    <main data-expected="String 2">
+        <table>
+            <tr><th>Foo</th><th>Bar</th></tr>
+            <tr><td><s>String 1</s></td><td><s>String 2</s></td></tr>
+        </table>
+        <dt></dt>
+        <rp>Bar</rp>
+        <output></output>
+    </main>
+
+    <span>Setting A Prop</span>
+    <main data-expected="String 3">
+        <table>
+            <tr><th>Foo</th><th>Bar</th></tr>
+            <tr><td><s>String 1</s></td><td><s>String 2</s></td></tr>
+        </table>
+        <dt></dt>
+        <s>String 3</s>
+        <samp>Bar</samp>
+        <dt></dt>
+        <rp>Bar</rp>
+        <output></output>
+    </main>
+
+</section>
+
+<section>
+
+    <h2>Control Flow Tests</h2>
+
+    <span>Positive If</span>
+    <main data-expected="Bar">
+        <s>Foo</s>
+        <cite>true</cite>
+        <i>
+            <s>Bar</s>
+        </i>
+        <output></output>
+    </main>
+
+    <span>Negative If</span>
+    <main data-expected="Foo">
+        <s>Foo</s>
+        <cite>false</cite>
+        <i>
+            <s>Bar</s>
+        </i>
+        <output></output>
+    </main>
+
+    <span>Anchor Jump</span>
+    <main data-expected="Foo">
+        <s>Foo</s>
+        <a href="#o1"></a>
+        <s>Bar</s>
+        <output id="o1"></output>
+    </main>
+
+    <span>Return Stops Execution</span>
+    <main data-expected="Foo">
+        <s>Foo</s>
+        <output></output>
+        <rt></rt>
+        <s>Bar</s>
+        <output></output>
+    </main>
+
+</section>
+
+<section>
+
+    <h2>Functions</h2>
+
+    <span>Basic Arguments Work</span>
+    <main data-expected="BarFoo">
+        <a href="javascript:func1()">
+            <s>Foo</s>
+            <s>Bar</s>
+        </a>
+        <dfn id="func1">
+            <output></output>
+            <del></del>
+            <output></output>
+        </dfn>
+    </main>
+
+    <span>Return Values Work</span>
+    <main data-expected="Bar">
+        <a href="javascript:func2()">
+        </a>
+        <output></output>
+        <dfn id="func2">
+            <s>Bar</s>
+        </dfn>
+    </main>
+
+    <span>Recursion Works</span>
+    <main data-expected="15">
+        <a href="javascript:sumto()">
+            <data value="5"></data>
+        </a>
+        <output></output>
+        <dfn id="sumto">
+            <dt></dt>
+            <data value="1"></data>
+            <small></small>
+            <i>
+                <data value="0"></data>
+                <rt></rt>
+            </i>
+            <a href="javascript:sumto()">
+                <dt></dt>
+                <data value="1"></data>
+                <sub></sub>
+            </a>
+            <dd></dd>
+        </dfn>
+    </main>
+
+</section>
+
+<section>
+
+    <h2>Variables</h2>
+
+    <span>Basic Variable Works</span>
+    <main data-expected="Foo">
+        <s>Foo</s>
+        <var title="foo"></var>
+        <cite>foo</cite>
+        <output></output>
+    </main>
+
+    <span>Variables Can Be Set Twice</span>
+    <main data-expected="FooBar">
+        <s>Foo</s>
+        <var title="foo"></var>
+        <cite>foo</cite>
+        <output></output>
+
+        <s>Bar</s>
+        <var title="foo"></var>
+        <cite>foo</cite>
+        <output></output>
+    </main>
+
+    <span>Function Variables Are Scoped Properly</span>
+    <main data-expected="FooBarFoo">
+        <s>Foo</s>
+        <var title="foo"></var>
+        <cite>foo</cite>
+        <output></output>
+
+        <a href="javascript:func3()"></a>
+
+        <cite>foo</cite>
+        <output></output>
+
+        <dfn id="func3">
+            <s>Bar</s>
+            <var title="foo"></var>
+            <cite>foo</cite>
+            <output></output>
+        </dfn>
+    </main>
+
+
+</section>
+
+<script>
+    // test framework implementation
+    document.body.addEventListener("html:beforeExec", function(evt){
+        let target = evt.target;
+        let debugging = target.getAttribute("data-debug") === 'true';
+        if (target.matches('main')) {
+            html.meta.out = function() {
+                let str = target.getAttribute("data-result");
+                if (debugging) {
+                    console.log('args:', arguments, "current:", str);
+                }
+                target.setAttribute("data-result", (str || "") + Array.from(arguments).join(""));
+            }
+        }
+    });
+
+    document.body.addEventListener("html:afterExec", function(evt){
+        let target = evt.target;
+        if (target.matches('main')) {
+            html.meta.out = console.log;
+            let expected = target.getAttribute("data-expected");
+            let result = target.getAttribute("data-result");
+            if (result === expected) {
+                target.insertAdjacentHTML( 'afterend', "<div style='color: green'>PASSED!</div>" );
+            } else {
+                target.insertAdjacentHTML( 'afterend', `<div style='color: red'>FAILED! Expected ${expected} but found ${result}</div>` );
+            }
+        }
+    });
+    function foo() {
+        return 1;
+    }
+</script>
+
+</body>
+</html>
