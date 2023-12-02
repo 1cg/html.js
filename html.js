@@ -309,6 +309,7 @@ let html = (() => {
                 // resolve command for the current element
                 let commandForElt = meta.commands[eltToExec.tagName.toLowerCase()];
                 if (commandForElt) {
+                    // debugger implementation
                     if (meta.hdb == null && eltToExec.hasAttribute("data-hdb-breakpoint")) {
                         meta.hdb = makeHDB();
                     }
