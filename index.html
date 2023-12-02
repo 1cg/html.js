@@ -650,6 +650,43 @@
     </pre>
 </section>
 
+<section>
+    <h2 id="properties"><a href="#properties">Working With Object Properties</a></h2>
+    <p>
+        You can both read and write the properties of objects in HTML, The Programming Language.
+    </p>
+
+    <h3 id="reading-props"><a href="#reading-props">Reading Properties</a></h3>
+    <p>
+        You can read a property of the value on the top of the stack by using the <code>&lt;rp></code> (read property)
+        tag.  The name of the property read will be the inner text of the tag.  This will consume the element the property is being
+        read on, so duplicate the top of the stack if you wish to preserve it.
+    </p>
+    <pre>
+&lt;!-- load the document onto the stack -->
+&lt;cite>document&lt;/cite>
+&lt;!-- load the body property onto the stack -->
+&lt;rp>body&lt;/rp>
+    </pre>
+
+    <h3 id="setting-props"><a href="#setting-props">Setting Properties</a></h3>
+    <p>
+        You can set a property of an object using the <code>&lt;samp></code> (set a merry property)
+        tag.  The name of the property to set will be the inner text of the tag.  The value to set into the property
+        must be on the top of the stack, and the object to set the property of must be second from the top of the stack.
+    </p>
+    <pre>
+&lt;!-- load the document onto the stack -->
+&lt;cite>document&lt;/cite>
+&lt;!-- load the body property onto the stack -->
+&lt;cite>body&lt;/cite>
+&lt;!-- push "Hello World!" onto the stack -->
+&lt;s>Hello World!&lt;/s>
+&lt;!-- set the innerHTML property of the body to "Hello World!" -->
+&lt;samp>innerHTML&lt;/samp>
+    </pre>
+
+</section>
 
 
 <section>
@@ -660,7 +697,7 @@
                 I have found a bug in HTML, The Programming Language.  What should I do?
             </i>
             <p>
-                HTML, The Programming Language, is correct by definition.  The bug therefore is not in the programming
+                HTML, The Programming Language, is correct, by definition.  The bug therefore is not in the programming
                 language, but rather it is in you.
             </p>
         </li>
