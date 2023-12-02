@@ -563,6 +563,45 @@
 </section>
 
 <section>
+    <h2 id="variables"><a href="#variables">Variables</a></h2>
+    <p>
+        Variables in HTML, the programming language are always "local" to the current context.  Global variables,
+        defined in <code>window</code> can be resolved by name, but cannot be written to.  (You must use a property
+        access on the <code>window</code> object to do that).
+    </p>
+    <p>
+        Note that the values <code>true</code>, <code>false</code> and <code>null</code> are defined as variables
+        and can be overwritten.  We do not recommend this practice, but we are not judgy about it either.
+    </p>
+
+    <h3 id="cite"><a href="#cite">Referencing Variables</a></h3>
+    <p>
+        You push a variable onto the top of the value stack by using the <code>&lt;cite></code> tag.  This will resolve
+        the variable against the local scope first, and then against <code>window</code>, allowing you to load globally
+        scoped variables.
+    </p>
+    <pre>
+&lt;!-- this will push true onto the stack, since true is a variable with the value true -->
+&lt;cite>true&lt;/cite>
+&lt;output>&lt;/output>
+    </pre>
+
+    <h3 id="var"><a href="#var">Declaring & Setting a Variable</a></h3>
+    <p>
+        You declare or set (same thing) a variable using the <code>&lt;var></code>
+        tag.  This will pop the top value off the stack and save it into the variable slot with the
+        name taken from the <code>title</code> attribute of the variable.
+    </p>
+    <pre>
+&lt;data value="1">&lt;/data>
+&lt;!-- this create a locally scoped variable named 'x' with the value 1 in it -->
+&lt;var title="x">&lt;/var>
+    </pre>
+    <p>
+        Again, declaring and assigning variables in HTML, the programming language, is the same thing.
+    </p>
+
+<section>
     <h2 id="example"><a href="#example">Example</a></h2>
     <p>
         While the documentation of programming languages are typically great resources and riveting reading, it
