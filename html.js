@@ -271,6 +271,22 @@ let html = (() => {
         }
     }
 
+    function makeHDB() {
+        var hdb = {
+            break() {},
+            step() {
+                hdb.result = "step";
+            },
+            continue() {
+                hdb.result = "continue";
+            },
+            jumpTo(elt) {
+                hdb.result = elt;
+            }
+        }
+        return hdb;
+    }
+
     function exec(sourceOrElt, root, env) {
         if (sourceOrElt == null) {
             meta.error("No html source detected")
@@ -293,6 +309,20 @@ let html = (() => {
                 // resolve command for the current element
                 let commandForElt = meta.commands[eltToExec.tagName.toLowerCase()];
                 if (commandForElt) {
+                    if (meta.hdb == null && eltToExec.hasAttribute("data-hdb-breakpoint")) {
+                        meta.hdb = makeHDB();
+                    }
+                    if (meta.hdb && meta.debug) {
+                        meta.hdb.result = "step";
+                        meta.debug(meta.hdb, eltToExec, env, commandForElt);
+                        if (meta.hdb.result === "continue") {
+                            meta.hdb = null;
+                        } else if (typeof (meta.hdb.result) == "object") {
+                            commandForElt = meta.hdb.result;
+                            continue;
+                        }
+                        // else step
+                    }
                     // invoke command and get next element
                     var next = commandForElt(eltToExec, env);
                     if (next === undefined) {

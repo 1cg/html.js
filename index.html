@@ -12,6 +12,7 @@
         pre {
             background-color: bisque;
             padding: 16px;
+            padding-bottom: 0px;
             border-radius: 8px;
             overflow: hidden;
             margin:24px;
@@ -31,6 +32,13 @@
         }
     </style>
     <script src="html.js"></script>
+    <script>
+        html.meta.debug = function(hdb, elt, env)
+        {
+            // you can set a JavaScript breakpoint here
+            hdb.break();
+        }
+    </script>
 </head>
 <body>
 <header>
@@ -693,7 +701,7 @@
 </section>
 
 <section>
-    <h2 id="arrays"><a href="#arrays">Working With Arrays</a></h2>
+    <h2 id="array-access"><a href="#array-access">Working With Arrays</a></h2>
     <p>
         You can both read and write to slots in arrays in HTML, The Programming Language.
     </p>
@@ -839,7 +847,7 @@
 </section>
 
 <section>
-    <h2 id="config"><a href="#config">Configuring/Extending HTML, The Programming Language</a></h2>
+    <h2 id="config"><a href="#config">Configuring/Extending</a></h2>
     <p>
         You can configure the standard out and standard error of HTML, The Programming Langauge bu
         setting the <code>html.meta.out</code> and <code>html.meta.err</code> values to functions
@@ -856,15 +864,62 @@
         As an example, if we wanted to make the <code>&lt;pre></code> tag print the entire value stack
         we could write something like this in JavaScript:
     </p>
-    <script>
-        html.meta.commands["pre"] = function(elt, env) {
-            console.log(env.stack);
-        }
-    </script>
+    <pre>
+html.meta.commands["pre"] = function(elt, env) {
+    console.log(env.stack);
+}
+    </pre>
+    <p>
+        With this definition you could then write the following code:
+    </p>
+    <pre>
+&lt;data value="1">&lt;/data>
+&lt;data value="2">&lt;/data>
+&lt;data value="3">&lt;/data>
+&lt;!-- will print the stack [1, 2, 3] to console.out -->
+&lt;pre>&lt;/pre>
+    </pre>
     <p>
         You can also implement arbitrary control flow by returning the next element in the DOM to execute
         from this function.
     </p>
+</section>
+
+<section>
+    <h2 id="debugging"><a href="#debugging">Debugging</a></h2>
+    <p>
+        HTML, The Programming Language, includes an integrated debugger, HDB, the HTML Debugger, to assist in debugging
+        HTML programs. To access the debugger, insert a function callback into the <code>html.meta.debugger</code> field.
+    </p>
+    <pre>
+html.meta.debug = function(hdb, elt, env, cmd)
+{
+    // you can set a JavaScript breakpoint here
+    hdb.break();
+}
+    </pre>
+    <p>
+        You can then add a breakpoint to an HTML element by adding the <code>data-hdb-breakpoint</code> attribute to it.
+        This will cause the runtime to invoke the HDB debugger <em>before</em> the element is executed.
+    </p>
+    <p>
+        The callback can have up to four parameters:
+    </p>
+    <ul>
+        <li><code>hdb</code> - The debugger</li>
+        <li><code>elt</code> - The element to be executed</li>
+        <li><code>env</code> - The current environment (including vars and the value stack)</li>
+        <li><code>cmd</code> - The implementation of the command</li>
+    </ul>
+    <p>
+        By setting a JavaScript breakpoint in the callback, you can inspect the current environment and command.  You
+        can also invoke one of the following methods on the <code>hdb</code> object:
+    </p>
+    <ul>
+        <li><code>step()</code> - Execute the current instruction and stop before the next one.</li>
+        <li><code>continue()</code> - Stop debugging and continue until the next breakpoint (or the program finishes)</li>
+        <li><code>jumpTo(elt)</code> - Don't execute the current element, instead jump to the given HTML element</li>
+    </ul>
 </section>
 
 <section>
@@ -993,7 +1048,7 @@
 
     <main>
         <dfn id="runFib">
-            <input placeholder="Please enter a number to calculate fib(n) for" type="number" />
+            <input placeholder="Please enter a number to calculate fib(n) for" type="number" data-hdb-breakpoint/>
             <var title="userValue"></var>
 
             <cite>userValue</cite>
