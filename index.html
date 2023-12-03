@@ -120,11 +120,14 @@
     <p>
         To get started with HTML, the programming language, you must first understand how a
         <i>stack-oriented</i> programming language works. In a stack-oriented programming language, most operations are
-        done with reference to a <i>stack</i> of values that is maintained in the current <em>execution frame</em> (either
-        the main HTML program or within a function defined in HTML).
+        done with reference to a <i>stack</i> of values.
     </p>
     <p>
-        In HTML, this is referred to as <i>the value stack</i> or, informally, as "the stack".
+        In HTML, this is referred to as <i>the value stack</i> or, informally, as "the stack".  In HTML, the stack is
+        maintained in the current <em>execution frame</em> (either the main HTML program or within a function defined in HTML),
+        rather than as a global stack, as in
+        <a href="https://en.wikipedia.org/wiki/Forth_(programming_language)">forth-like</a> languages. (In this regard,
+        HTML, the programming language, is <a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.6">similar to the JVM</a>.)
     </p>
     <p>
         Stack-oriented programming can seem strange to developers who have not worked with it before, so let's begin
