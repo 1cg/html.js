@@ -63,8 +63,8 @@
 <section>
     <h2 id="intro"><a href="#intro">Introduction</a></h2>
     <p>
-        HTML, the programming language, is a pratical, <a href="https://en.wikipedia.org/wiki/Turing_completeness">turing-complete</a><a href="#turning-complete">[1]</a>,
-        <a href="https://en.wikipedia.org/wiki/Stack-oriented_programming">stack-based</a>programming language based on <a href="https://en.wikipedia.org/wiki/HTML">HTML</a>,
+        HTML, the programming language, is a practical, <a href="https://en.wikipedia.org/wiki/Turing_completeness">turing-complete</a><a href="#turning-complete">[1]</a>,
+        <a href="https://en.wikipedia.org/wiki/Stack-oriented_programming">stack-based</a> programming language based on <a href="https://en.wikipedia.org/wiki/HTML">HTML</a>,
         the markup language. It uses <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">elements
         defined in HTML</a>, the markup language, in order to do computations.
     </p>
@@ -90,14 +90,13 @@
     </figure>
 
     <p>
-        HTML programs are specified in HTML, the markup language. Elements from HTML, the markup language, are
-        interpreted
-        as <i>commands</i> by the HTML interpreter. Note that HTML programs are <em>not</em> required to be legal HTML
-        5, the
-        markup language, documents.
+        HTML programs are specified in HTML, the markup language. Elements from HTML, the markup language, (informally
+        referrted to as "tags") are interpreted as <i>commands</i> by the HTML interpreter. Note that HTML programs
+        are <em>not</em> required to be legal <a href="https://en.wikipedia.org/wiki/HTML5">HTML5</a>, the markup
+        language, documents.
     </p>
     <p>
-        HTML is a fully pluggable programming language and you may add new
+        HTML is a <a href="#extending">fully customizable</a> programming language and you may add new
         commands or alter existing commands by mutating the <code>html.meta.commands</code> object.
     </p>
 </section>
@@ -105,7 +104,8 @@
 <section>
     <h2 id="installation"><a href="#installation">Installation</a></h2>
     <p>
-        To install HTML: The HTML Programming Language, include the <code>html.js</code> file via a script tag:
+        To install HTML, the programming language, <a href="html.js" download>download</a> and include the
+        <code>html.js</code> file via a script tag:
     </p>
     <pre>
 &lt;script src="html.js">&lt;/script>
@@ -118,13 +118,16 @@
 <section>
     <h2 id="getting-started"><a href="#getting-started">Getting Started</a></h2>
     <p>
-        To get started with HTML: The HTML Programming language, you must first understand that it is a
-        <i>stack-oriented</i> programming language. This means that most operations are done with reference
-        to a <i>stack</i> of values that is maintained in the current execution frame (either the main program
-        or within a function.) This is referred to as <i>the value stack</i>.
+        To get started with HTML, the programming language, you must first understand how a
+        <i>stack-oriented</i> programming language works. In a stack-oriented programming language, most operations are
+        done with reference to a <i>stack</i> of values that is maintained in the current <em>execution frame</em> (either
+        the HTML main program or within a function defined in HTML.).
     </p>
     <p>
-        This approach to programming can seem strange to developers who have not worked with it before, so let
+        In HTML, this is referred to as <i>the value stack</i> or, informally, as "the stack".
+    </p>
+    <p>
+        Stack-oriented programming can seem strange to developers who have not worked with it before, so let
         us begin with a simple "Hello World" program in HTML:
     </p>
     <pre>
@@ -134,13 +137,16 @@
 &lt/main>
  </pre>
     <p>
-        The first thing to notice is that the HTML program is defined in a <code>main</code> tag. This is how
-        you define programs in HTML.
+        The first thing to note is that in HTML a program is defined in a <code>&lt;main></code> tag.
     </p>
     <p>
-        The next thing to notice is that the program consists of a series of HTML tags. For the "Hello World" program,
-        we "push" the value <code>"Hello World!"</code> onto the stack, using the <code>s</code> tag. We then
-        print the value on the top of the stack out with the <code>output</code> tag.
+        The next thing to notice is that the program consists of a series of HTML tags within the <code>&lt;main></code> tag.
+        For the "Hello World" program, the first command is a <code>&lt;s></code> tag.  This will <a href="#strings">"push"
+        the value <code>"Hello World!"</code></a> onto the stack.
+    </p>
+    <p>
+        The next command is the <code>&lt;output></code> tag.  This will <a href="#output">output the top of the
+       value stack to standard out</a>, which is <code>console.log</code>.
     </p>
     <p>
         (Note that the <code>output</code> tag <b>does not</b> consume the top of the value stack.)
@@ -157,10 +163,14 @@
 &lt/main>
     </pre>
     <p>
-        In this HTML program, we push the values 2 and 3 onto the value stack, and then invoke the <code>dd</code>
-        command to "a(dd)" the top two values on the stack. This will "pop", or remove, the top two values, add
+        In this HTML program, we push the values 2 and 3 onto the value stack <a href="#numbers">using <code>&lt;data></code> tags</a>, and
+        then invoke the <code>dd</code> command to <a href="#addition">"a(dd)" the top two values on the stack</a> .
+        The <code>&lt;dd></code> command will "pop", or remove, the top two values of the value stack, add
         them together, and then "push" the result onto the top of the value stack. Next, we print the result out
         using the <code>output</code> tag.
+    </p>
+    <p>
+        With that brief introduction done, let's go over the entire language so you can get programming in HTML.
     </p>
 </section>
 
@@ -175,7 +185,7 @@
 </section>
 
 <section>
-    <h2 id="literals"><a href="#literals">Literals</a></h2>
+    <h2 id="literals"><a href="#literals">Literal Values</a></h2>
     <p>
         HTML supports many literals that can be used to push literal values onto the value stack.
     </p>
@@ -827,6 +837,23 @@
   &lt;data value="12">&lt;/data>
 &lt;/a>
 &lt;!-- output the result (144) -->
+&lt;output>&lt;/output>
+    </pre>
+    <h4 id="invoking-functions-object"><a href="#invoking-functions-objects">Invoking Functions On Objects</a></h4>
+    <p>
+        If you wish to invoke a function on an object (rather than on the global <code>window</code> object), you
+        can set the <code>target</code> attribute of the anchor tag to <code>_top</code>.  This will make it consume
+        the top of the value stack and invoke the method on that object.
+    </p>
+    <pre>
+&lt;!-- load the document -->
+&lt;cite>document&lt;cite>
+&lt;!-- load all elements with the class .highlighted onto the stack
+        by invoking the querySelectorAll() method -->
+&lt;a href="javascript:querySelectorAll()">
+  &lt;s>.highlighted&lt;/s>
+&lt;/a>
+&lt;!-- output the result -->
 &lt;output>&lt;/output>
     </pre>
 
