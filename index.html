@@ -70,19 +70,19 @@
     </p>
     <p>
         To give you a sense of what HTML the programming langauge looks like, below is a sample program that prints
-        the values from 10 to 0 to standard out (<code>console.log</code>)
+        the values from 1 to 10 to standard out (<code>console.log</code>)
     </p>
 
     <figure>
         <figcaption>A Sample HTML Program</figcaption>
         <pre>
-&lt;data value="10">&lt;/data>     &lt;!-- push 10 onto the stack -->
+&lt;data value="1">&lt;/data>      &lt;!-- push 1 onto the stack -->
 &lt;output id="loop">&lt;/output>  &lt;!-- print the top of the stack -->
 &lt;data value="1">&lt;/data>      &lt;!-- push 1 onto the stack -->
-&lt;sub>&lt;/sub>                  &lt;!-- sub 1 -->
+&lt;dd>&lt;/dd>                    &lt;!-- add 1 -->
 &lt;dt>&lt;/dt>                    &lt;!-- dup new value -->
-&lt;data value="0">&lt;/data>      &lt;!-- push zero to compare -->
-&lt;big>&lt;/big>                  &lt;!-- test new value is bigger than 0 -->
+&lt;data value="11">&lt;/data>     &lt;!-- push 11 to compare -->
+&lt;small>&lt;/small>                  &lt;!-- test new value is smaller than 11 -->
 &lt;i>                          &lt;!-- if bigger than zero pushed true -->
     &lt;a href="#loop">&lt;/a>     &lt;!-- then jump back to the loop -->
 &lt;/i>
@@ -91,7 +91,7 @@
 
     <p>
         HTML programs are specified in HTML, the markup language. Elements from HTML, the markup language, (informally
-        referrted to as "tags") are interpreted as <i>commands</i> by the HTML interpreter. Note that HTML programs
+        referred to as "tags") are interpreted as <i>commands</i> by the HTML interpreter. Note that HTML programs
         are <em>not</em> required to be legal <a href="https://en.wikipedia.org/wiki/HTML5">HTML5</a>, the markup
         language, documents.
     </p>
@@ -121,14 +121,14 @@
         To get started with HTML, the programming language, you must first understand how a
         <i>stack-oriented</i> programming language works. In a stack-oriented programming language, most operations are
         done with reference to a <i>stack</i> of values that is maintained in the current <em>execution frame</em> (either
-        the HTML main program or within a function defined in HTML.).
+        the main HTML program or within a function defined in HTML).
     </p>
     <p>
         In HTML, this is referred to as <i>the value stack</i> or, informally, as "the stack".
     </p>
     <p>
-        Stack-oriented programming can seem strange to developers who have not worked with it before, so let
-        us begin with a simple "Hello World" program in HTML:
+        Stack-oriented programming can seem strange to developers who have not worked with it before, so let's begin
+        with a simple "Hello World" program in HTML:
     </p>
     <pre>
 &lt;main>
@@ -142,7 +142,7 @@
     <p>
         The next thing to notice is that the program consists of a series of HTML tags within the <code>&lt;main></code> tag.
         For the "Hello World" program, the first command is a <code>&lt;s></code> tag.  This will <a href="#strings">"push"
-        the value <code>"Hello World!"</code></a> onto the stack.
+        the string value <code>"Hello World!"</code></a> onto the stack.
     </p>
     <p>
         The next command is the <code>&lt;output></code> tag.  This will <a href="#output">output the top of the
@@ -170,7 +170,12 @@
         using the <code>output</code> tag.
     </p>
     <p>
-        With that brief introduction done, let's go over the entire language so you can get programming in HTML.
+        In a stack-oriented language like HTML, this is how things are done: pushing and popping values on the
+        stack in order to do computations.
+    </p>
+    <p>
+        With that brief introduction out of the way, let's go over the entire language so you can add HTML, the
+        programming language, to your resume.
     </p>
 </section>
 
@@ -187,7 +192,7 @@
 <section>
     <h2 id="literals"><a href="#literals">Literal Values</a></h2>
     <p>
-        HTML supports many literals that can be used to push literal values onto the value stack.
+        HTML supports many different literals that can be used to push values onto the value stack.
     </p>
 
     <h3 id="numbers"><a href="#numbers">Numbers</a></h3>
@@ -262,9 +267,9 @@
     <h3 id="true"><a href="#true">true, false & null</a></h3>
     <p>
         The values <code>true</code>, <code>false</code> and <code>null</code> can all be accessed with the
-        <code>&lt;cite></code> command.  These are defined as variables at the start of every new scope/
-        activation frame.  It is possible to override these variables, but we do not recommend doing so
-        in general.
+        <code>&lt;cite></code> command.  These are defined as <a href="#variables">variables</a> at the start of every
+        new activation frame (aka scope).  Note that it is possible to override these variables with different values,
+        such as setting <code>null</code> to <code>"lmao"</code>, but that we do not recommend doing so in most cases.
     </p>
     <pre>
 &lt;!-- this pushes true onto the stack -->
@@ -276,7 +281,24 @@
 <section>
     <h2 id="math"><a href="#math">Math</a></h2>
     <p>
-        HTML offers support for common mathematical operators.
+        HTML offers support for common mathematical operators, utilizing the value stack.
+    </p>
+
+    <h3 id="addition"><a href="#addition">Addition</a></h3>
+    <p>
+        Addition can be performed with the <code>&lt;dd></code> (a<b>dd</b>) tag.  This tag will pop the top
+        two values off the value stack, add the top value to the second to the top value, and
+        then push the result back onto the value stack.
+    </p>
+    <pre>
+&lt;data value="2">&lt;/data>
+&lt;data value="1">&lt;/data>
+&lt;!-- this dd tag will add 1 to 2 and push the result onto
+        the value stack -->
+&lt;dd>&lt;/dd>
+    </pre>
+    <p>
+        Note that addition can also be used for string concatenation, as in JavaScript.
     </p>
 
     <h3 id="subtraction"><a href="#subtraction">Subtraction</a></h3>
@@ -293,26 +315,9 @@
 &lt;sub>&lt;/sub>
     </pre>
 
-    <h3 id="addition"><a href="#addition">Addition</a></h3>
-    <p>
-        Addition can be performed with the <code>&lt;dd></code> tag.  This tag will pop the top
-        two values off the value stack, add the top value to the second to the top value, and
-        then push the result back onto the value stack.
-    </p>
-    <pre>
-&lt;data value="2">&lt;/data>
-&lt;data value="1">&lt;/data>
-&lt;!-- this dd tag will add 1 to 2 and push the result onto
-        the value stack -->
-&lt;dd>&lt;/dd>
-    </pre>
-    <p>
-        Note that addition can also be used for string concatenation, as in JavaScript.
-    </p>
-
     <h3 id="multiplication"><a href="#multiplication">Multiplication</a></h3>
     <p>
-        Multiplication can be performed with the <code>&lt;ul></code> tag.  This tag will pop the top
+        Multiplication can be performed with the <code>&lt;ul></code> (m<b>ul</b>) tag.  This tag will pop the top
         two values off the value stack, multiply the top value by the second to the top value, and
         then push the product back onto the value stack.
     </p>
@@ -335,7 +340,7 @@
 &lt;data value="3">&lt;/data>
 &lt;!-- this ul tag will divide 6 by 3 and push the result onto
         the value stack -->
-&lt;ul>
+&lt;ul>&lt;/ul>
     </pre>
 
 </section>
@@ -343,12 +348,14 @@
 <section>
     <h2 id="stack"><a href="#stack">Stack Operations</a></h2>
     <p>
-        HTML offers a few commands for manipulation the stack.
+        HTML offers commands for direct manipulation the stack.
     </p>
 
     <h3 id="duplicate"><a href="#duplicate">Duplicate</a></h3>
     <p>
-        You can duplicate the value on the top of the stack using the <code>&lt;td></code> (duplicate top) tag.
+        You can duplicate the value on the top of the stack using the <code>&lt;dt></code> (duplicate top) tag.  This
+        is useful in cases where you want to use a value more than once for operations that would consume the value, such
+        as <a href="#if">an if/else</a> situation.
     </p>
     <pre>
 &lt;data value="1">&lt;/data>
@@ -359,7 +366,7 @@
 
     <h3 id="delete"><a href="#delete">Delete</a></h3>
     <p>
-        You can delete the value on the top of the stack using the <code>&lt;del></code> tag.
+        You can delete/pop the value on the top of the stack using the <code>&lt;del></code> tag.
 
     </p>
     <pre>
@@ -375,7 +382,7 @@
     <p>
         In HTML, comparisons such as less than, equal, etc. are done on the value stack.  Comparison
         commands compare two values and leave a boolean on the top of the value stack, which can then
-        be used with the "if" command to do conditional execution.
+        be used with the <a href="#if">"if" command</a> to do conditional execution.
     </p>
 
     <h3 id="smaller"><a href="#smaller">Less Than</a></h3>
@@ -411,9 +418,9 @@
         is equal (==) than the top value, false otherwise.
     </p>
     <p>
-        Note that we say equal (mostly) because equality in JavaScript (which HTML, the programming language,
-        is implemented in) has some
-        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality">strange</a>
+        Note that we say "equal (mostly)" because the equality operator in JavaScript (which HTML, the programming language,
+        is implemented in) has
+        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality">interesting</a>
         semantics.
     </p>
     <pre>
@@ -428,11 +435,11 @@
 <section>
     <h2 id="logical"><a href="#logical">Logical Operations</a></h2>
     <p>
-        As with comparisons in HTML, logical operations such as and, or, etc. are done on the value stack.
-        Logical operations apply to values on the value stack and leave a boolean on the top of the value stack.
+        As with comparisons in HTML, logical operations such as <code>and</code>, <code>or</code>, etc. are done on the value stack.
+        Logical operations apply to values on the value stack and will leave a boolean on the top of the value stack.
     </p>
     <p>
-        All logical operators start with a "b" for "boolean".
+        All logical operators start with a "b" for "boolean", to make things easier to remember.
     </p>
     <p>
         Note that HTML, the programming language, follows JavaScript, the programming language's (sic)
@@ -441,7 +448,7 @@
 
     <h3 id="and"><a href="#and">And</a></h3>
     <p>
-        You can logically and the top two values on the value stack using the <code>&lt;b></code>
+        You can logically "and" the top two values on the value stack using the <code>&lt;b></code>
         command.  This will pop the top two values off the stack and push the result of them being "anded"
         together.
     </p>
@@ -454,7 +461,7 @@
 
     <h3 id="or"><a href="#or">Or</a></h3>
     <p>
-        You can logically and the top two values on the value stack using the <code>&lt;bdo></code>
+        You can logically "or" the top two values on the value stack using the <code>&lt;bdo></code>
         command.  This will pop the top two values off the stack and push the result of them being "anded"
         together.
     </p>
@@ -468,8 +475,8 @@
     <h3 id="invert"><a href="#invert">Invert/Not</a></h3>
     <p>
         You can invert the top value on the value stack using the <code>&lt;bdi></code>
-        command.  This will pop the top two values off the stack and push the result of them being "anded"
-        together.
+        command.  This will pop the top value off the stack and push the result of it being inverted (<code>true</code>
+        becomes <code>false</code>, <code>false</code> becomes <code>true</code>).
     </p>
     <pre>
 &lt;cite>false&lt;/cite>
@@ -482,8 +489,8 @@
 <section>
     <h2 id="control-flow"><a href="#control-flow">Control Flow</a></h2>
     <p>
-        HTML provides relatively primitive control flow commands.  None-the-less, you can implement conditional
-        execution and looping using them.
+        HTML provides relatively two mechanisms for your control flow commands.  While these mechanisms may seem primitive,
+        the can be used to implement any sort of arbitrary control flow pattern you would like.
     </p>
 
     <h3 id="if"><a href="#if">If (Conditional Execution)</a></h3>
@@ -504,9 +511,12 @@
 &lt;/i>
     </pre>
     <p>
-        If you wish to achieve and if/else like flow, you can convieniently duplicate the boolean on the
-        top of the stack, use an <code>&lt;i/></code> and then invert the boolean using
-        <code>&lt;bdi></code> and test again using <code>&lt;i></code>.
+        If you wish to achieve and if/else like flow, you can conveniently <a href="#duplicate">duplicate</a> the boolean
+        on the top of the stack, use an <code>&lt;i/></code> to test the first case (which will consume the top boolean)
+        and then invert the boolean using <a href="#invert"><code>&lt;bdi></code> </a> and test again using <code>&lt;i></code>.
+    </p>
+    <p>
+        This gives you a clean and easy to use "if/else" style statement:
     </p>
     <pre>
 &lt;data value="1">&lt;/data>
@@ -532,7 +542,7 @@
 
     <h3 id="return"><a href="#return">Returning</a></h3>
     <p>
-        If you wish to return from a function (discussed below) or simply terminate the execution of
+        If you wish to return from <a href="#functions">a function</a> (discussed below) or simply terminate the execution of
         a program, you may use the <code>&lt;rt></code> tag.  This will immediately stop execution in the
         current context and either return from a function or halt the execution of a program.
     </p>
@@ -548,7 +558,7 @@
     <p>
         To execute arbitrary jumps in an HTML, the programming language, you use the anchor tag: <code>&lt;a></code>,
         by setting the <code>href</code> attribute to the id of the command you wish to jump to.  This allows you
-        to implement things like loops and can be coupled with conditional execution via the <code>&lt;i></code>
+        to implement things like loops, and can be coupled with conditional execution via the <code>&lt;i></code>
         tag to implement powerful control flow patterns.
     </p>
     <p>
@@ -573,7 +583,7 @@
     </p>
     <p>
         Note that this jump back to the beginning of the loop is conditional on the top of the stack being
-        less than 11.  Thus you can see that powerful looping constructs can be created out of these primitive
+        less than 11.  Thus you can see that powerful control flow patterns can be created out of these primitive
         branching mechanisms.
     </p>
     <aside>
@@ -593,7 +603,7 @@
     </p>
     <p>
         Note that the values <code>true</code>, <code>false</code> and <code>null</code> are defined as variables
-        and can be overwritten.  We do not recommend this practice, but we are not judgy about it either.
+        and can be overwritten.  Again, we do not recommend this practice, but we are not judgy about it either.
     </p>
 
     <h3 id="cite"><a href="#cite">Referencing Variables</a></h3>
@@ -603,7 +613,8 @@
         scoped variables.
     </p>
     <pre>
-&lt;!-- this will push true onto the stack, since true is a variable with the value true -->
+&lt;!-- this will push true onto the stack, since
+        true is a variable with the value true -->
 &lt;cite>true&lt;/cite>
 &lt;output>&lt;/output>
     </pre>
@@ -617,11 +628,13 @@
     <pre>
 &lt;!-- push 1 onto the value stack -->
 &lt;data value="1">&lt;/data>
-&lt;!-- this creates a locally scoped variable named 'x' with the value 1 in it -->
+&lt;!-- this creates a locally scoped variable
+        named 'x' with the value 1 in it -->
 &lt;var title="x">&lt;/var>
     </pre>
     <p>
-        Again, declaring and assigning variables in HTML, the programming language, is the same thing.
+        Again, declaring and assigning variables in HTML, the programming language, is the same thing, so you may
+        have multiple <code>&lt;var></code> tags that refer to the same variable name.
     </p>
 </section>
 
@@ -629,8 +642,9 @@
     <h2 id="io"><a href="#io">I/O</a></h2>
     <p>
         It's a little late in the game, since we've been using <code>&lt;output></code> a bunch already, but HTML, the programming language,
-        supports simple I/O operations.  Of course, HTML, the programming language, can interact with the DOM in order to
-        do I/O as well, but simple I/O can be accomplished directly in the language itself.
+        supports simple I/O operations.  Of course, HTML, the programming language, can interact with the DOM using
+        <a href="#functions">functions</a> in order to do I/O as well, but simple I/O can be accomplished directly in
+        the language itself.
     </p>
 
     <h3 id="output"><a href="#output">Outputting Values</a></h3>
@@ -655,8 +669,11 @@
     </p>
     <p>
         This tag will prompt the user for input using the <code>prompt()</code> method in JavaScript.  The message
-        shown to the user will be taken from the <code>placeholder</code> attribute.  If you wish to ask for a number,
-        rather than a string, from the user, you can set the <code>type</code> attribute to <code>number</code>.
+        shown to the user will be taken from the <code>placeholder</code> attribute.
+    </p>
+    <p>
+        If you wish to ask for a number, rather than a string, from the user, you can set the <code>type</code> attribute
+        of the <code>&lt;input></code> to <code>number</code>.
     </p>
     <p>
         The result of the prompt will be pushed onto the top of the value stack.
@@ -693,7 +710,7 @@
 
     <h3 id="setting-props"><a href="#setting-props">Setting Properties</a></h3>
     <p>
-        You can set a property of an object using the <code>&lt;samp></code> (set a merry property)
+        You can set a property of an object using the <code>&lt;samp></code> (set am property)
         tag.  The name of the property to set will be the inner text of the tag.  The value to set into the property
         must be on the top of the stack, and the object to set the property of must be second from the top of the stack.
     </p>
@@ -716,7 +733,7 @@
 <section>
     <h2 id="array-access"><a href="#array-access">Working With Arrays</a></h2>
     <p>
-        You can both read and write to slots in arrays in HTML, the programming language.
+        You can both read and write to indices in arrays in HTML, the programming language.
     </p>
 
     <h3 id="reading-arrays"><a href="#reading-arrays">Reading An Array Value</a></h3>
@@ -788,18 +805,25 @@
     <h3 id="defining-functions"><a href="#defining-functions">Defining Functions</a></h3>
     <p>
         You can define functions using the <code>&lt;dfn></code> tag.  The name of the function will be
-        taken from the <code>id</code> property.  The body of the function are the commands/tags within
-        the <code>&lt;dfn></code> tag.
+        taken from the <code>id</code> property of the <code>&lt;dfn></code> tag.  The body of the function are the
+        commands/tags within the <code>&lt;dfn></code> tag.
     </p>
     <p>
         Arguments passed to the function will be pushed onto the value stack.  So, if a function is invoked
-        with the values (1, 2, 3), the initial value stack will be 3 on top, then 2, then 1.  It is common
-        for HTML, the programming language, programmers to save these values to variables using the
-        <code>&lt;var></code> command, to make it easier to refer to them.
+        with the values (1, 2, 3), the initial value stack will be 3 on top, then 2, then 1.
     </p>
     <p>
-        The return value of a function defined in HTML, the programming language, will be the top value
-        left on the value stack at the end of the function's execution.
+        It is common for HTML, the programming language, programmers to save the arguments to a function int variables
+        using the <code>&lt;var></code> command at the beginning of complex functions, in order to make it easier to
+        refer to them.  (Note that this must be done in reverse order to the order that the parameters are received.)
+    </p>
+    <p>
+        The return value of a function defined in HTML, the programming language, is the top value
+        left on the value stack at the end of the function's execution.  There is no need to explicitly return this value
+        with syntax.
+    </p>
+    <p>
+        Note that you can terminate a functions execution early by using the <a href="#return"><code>&lt;rt></code></a> command.
     </p>
     <pre>
 &lt;!-- this defines a simple function that squares the argument -->
@@ -825,7 +849,7 @@
     <p>
         Instead, arguments are passed by executing <em>child</em> elements within the <code>&lt;a></code>
         tag.  All elements within the <code>&lt;a></code> tag will be executed and then the <em>new</em> values
-        that are pushed onto the stack by the children will be collected and used as the arguments to the
+        that are pushed onto the value stack by the children will be removed from the stack and used as the arguments to the
         function.
     </p>
     <p>
@@ -839,7 +863,7 @@
 &lt;!-- output the result (144) -->
 &lt;output>&lt;/output>
     </pre>
-    <h4 id="invoking-functions-object"><a href="#invoking-functions-objects">Invoking Functions On Objects</a></h4>
+    <h4 id="invoking-functions-objects"><a href="#invoking-functions-objects">Invoking Functions On Objects</a></h4>
     <p>
         If you wish to invoke a function on an object (rather than on the global <code>window</code> object), you
         can set the <code>target</code> attribute of the anchor tag to <code>_top</code>.  This will make it consume
@@ -849,8 +873,9 @@
 &lt;!-- load the document -->
 &lt;cite>document&lt;cite>
 &lt;!-- load all elements with the class .highlighted onto the stack
-        by invoking the querySelectorAll() method -->
-&lt;a href="javascript:querySelectorAll()">
+        by invoking the querySelectorAll() method on the docuemtn-->
+&lt;a href="javascript:querySelectorAll()"
+      target="_top">
   &lt;s>.highlighted&lt;/s>
 &lt;/a>
 &lt;!-- output the result -->
@@ -1018,10 +1043,13 @@ html.meta.debug = function(hdb, elt, env, cmd)
 <section>
     <h2 id="example"><a href="#example">Example</a></h2>
     <p>
-        While the documentation of programming languages are typically great resources and riveting reading, it
-        is also often good to see a complete example to help "tie things together", if you will.  In the spirit
-        of this observation, here is a function written in HTML that computes the
-        <a href="https://en.wikipedia.org/wiki/Fibonacci_sequence">Nth fibonnacci number</a>.
+        While the programming language documentation is the primary resource for understanding any programming
+        language, it is also often good to see a complete, real-world example of code in the programming language
+        in order to help "tie things together", if you will.
+    </p>
+    <p>
+        In the spirit of this observation, here is a function written in HTML, the programming language, that computes the
+        <a href="https://en.wikipedia.org/wiki/Fibonacci_sequence">Nth fibonnacci number</a>:
     </p>
     <pre>
 &lt;dfn id="fib">
@@ -1076,6 +1104,10 @@ html.meta.debug = function(hdb, elt, env, cmd)
         Calculate A Fibonnacci Number
     </button>
 
+    <p>
+        And here is the actual definition in a <code>&lt;main></code> (along with a helper, <code>runFib()</code> that
+        asks the user for input).  You can inspect this element to see the details.
+    </p>
     <main>
         <dfn id="runFib">
             <input placeholder="Please enter a number to calculate fib(n) for" type="number" data-hdb-breakpoint/>
