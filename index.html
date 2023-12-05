@@ -531,7 +531,7 @@
 &lt;!-- Since false is on the stack, the child tags/commands will not execute here -->
 &lt;i>
   &lt;s>Yep, 1 == 2&lt;/s>
-  &lt;output>&lt;.output>
+  &lt;output>&lt;/output>
   &lt;!-- remove the string from the top of the stack to be clean -->
   &lt;del>&lt;/del>
 &lt;/i>
@@ -539,7 +539,7 @@
 &lt;bdi>&lt;/bdi>
 &lt;i>
   &lt;s>Nope, 1 == 2 isn't true, even in JavaScript&lt;/s>
-  &lt;output>&lt;.output>
+  &lt;output>&lt;/output>
 &lt;/i>
     </pre>
 
@@ -835,7 +835,7 @@
     &lt;dt>&lt;/dt>
     &lt;!-- multiply it and return (leaving it on the top of the stack -->
     &lt;ul>&lt;/ul>
-&lt;/def>
+&lt;/dfn>
     </pre>
 
     <h3 id="invoking-functions"><a href="#invoking-functions">Invoking Functions</a></h3>
