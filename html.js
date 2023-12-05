@@ -1,4 +1,4 @@
-let html = (() => {
+var html = (() => {
 
     let javascriptRef = /javascript:([^(]*).*/
 
