@@ -794,7 +794,7 @@
 &lt;data value="22">&lt;/data>
 &lt;!-- consumes the 22, 0 and the array, indexes into the array at position 0,
         and sets it to the value 22-->
-&lt;address>&lt;/address>
+&lt;ins>&lt;/ins>
     </pre>
 
 </section>
@@ -946,7 +946,11 @@ html.meta.commands["pre"] = function(elt, env) {
 <section>
     <h2 id="debugging"><a href="#debugging">Debugging</a></h2>
     <p>
-        HTML, the programming language, includes an integrated debugger, HDB, the HTML Debugger, to assist in debugging
+        In HTML, the programming language, simple "log" style debugging can be done via the &lt;wbr> tag, which will
+        print out the content of the tags <code>title</code> attribute, as well as the current stack and variable values.
+    </p>
+    <p>
+        HTML, the programming language, also includes an integrated debugger, HDB, the HTML Debugger, to assist in debugging
         HTML programs. To access the debugger, insert a function callback into the <code>html.meta.debugger</code> field.
     </p>
     <pre>

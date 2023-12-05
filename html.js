@@ -181,6 +181,9 @@ var html = (() => {
             let top = env.stack.at(-1);
             meta.out(top);
         },
+        "wbr": function (elt, env) {
+            meta.out(elt.getAttribute('title'), "stack:", env.stack, "vars:", env.vars)
+        },
         // ===============================
         // Properties
         // ===============================
