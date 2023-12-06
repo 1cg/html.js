@@ -229,7 +229,8 @@ var html = (() => {
     let meta = {
         out: console.log,
         error: console.error,
-        commands
+        commands,
+        defineFunctions
     }
 
     function nextEltToExec(elt) {
@@ -307,7 +308,7 @@ var html = (() => {
             // set the current element to execute
             let eltToExec = sourceOrElt;
             // define all functions within the element
-            defineFunctions(eltToExec);
+            meta.defineFunctions(eltToExec);
             do {
                 // resolve command for the current element
                 let commandForElt = meta.commands[eltToExec.tagName.toLowerCase()];
