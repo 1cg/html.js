@@ -230,7 +230,8 @@ var html = (() => {
         out: console.log,
         error: console.error,
         commands,
-        defineFunctions
+        defineFunctions,
+        makeEnv
     }
 
     function nextEltToExec(elt) {
@@ -252,7 +253,7 @@ var html = (() => {
             }
             let func = function () {
                 var args = Array.from(arguments);
-                let env = makeEnv({});
+                let env = meta.makeEnv({});
                 env.stack.push(...args);
                 if (definition.firstElementChild) {
                     exec(definition.firstElementChild, definition, env);
@@ -264,7 +265,7 @@ var html = (() => {
         }
     }
 
-    function makeEnv(vars) {
+    function makeEnv() {
         return {
             stack: [],
             vars: { // start with standard variables for common values
@@ -304,7 +305,7 @@ var html = (() => {
             // set the root element if necessary
             root ||= sourceOrElt;
             // create an environment if necessary
-            env ||= makeEnv();
+            env ||= meta.makeEnv();
             // set the current element to execute
             let eltToExec = sourceOrElt;
             // define all functions within the element
